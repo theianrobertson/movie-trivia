@@ -1,0 +1,4 @@
+*.secret
+*.pyc
+.ipynb_checkpoints/
+.DS_store

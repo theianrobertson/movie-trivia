@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block style %}
+  body {
+    background-color: #336699;
+    font-family: sans-serif;
+    color: white;
+  }
+  .container {
+    overflow: auto;
+  }
+  .clue {
+    display: none;
+    color: #336699;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    padding: 1em;
+    margin-bottom: 1em;
+    border: 1px solid transparent;
+    border-radius: 0.25em;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  #answer {
+    display: none;
+    margin-top: 0.5em;
+    width: 100%;
+  }
+  .picture {
+    float: left;
+    width: 28%;
+  }
+  .clues {
+    float: left;
+  }
+{% endblock %}
+
+
+{% block content %}
+    <div class="header">
+      <h1>Movie Guesser!</h1>
+    </div>
+    <div class="container">
+      <div class="picture">
+        <svg id="svg-image-blur" width="344" height="516" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <image x="0" y="0" id="svg-image" width="344" height="516" xlink:href="/static/img/{{ peep.picture }}" filter="url(#blur)" />
+          <filter id="blur"><feGaussianBlur id="gauss" stdDeviation="30" /></filter>
+        </svg> 
+      </div>
+      <div class="clues">
+        {% for clue in peep.clues %}
+        <div class="clue">{{ clue }}</div>
+        {% endfor %}
+        <div id="answer">{{ peep.person }}!</div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+      var clues = document.getElementsByClassName("clue");
+      var maxBlur = 30;
+      var blurStep = maxBlur / clues.length;
+      var currentClue = 0;
+
+      var aniFunc = function(){
+        document.getElementById("gauss").setAttribute("stdDeviation", (maxBlur - (blurStep * currentClue)).toString());
+        if (currentClue == clues.length) {
+          document.getElementById('answer').style.display = 'block';
+          window.clearInterval(myInterval);
+        } else {
+          clues[currentClue].style.display = 'block';
+          currentClue++;
+        }
+      };
+      myInterval = window.setInterval(aniFunc, 500);
+    </script>
+{% endblock %}
