@@ -1,0 +1,21 @@
+[{"picture": "LeonardoDiCaprio.jpg",
+  "clues": [
+		"Born November 11th, 1974 in Hollywood, California, United States",
+		"Debuted in 1989 as 'Glen' in 'The New Lassie'",
+		"Has been nominated for six Academy Awards",
+		"Nominated for the Golden Globe for Best Supporting Actor - Motion Picture for his role in Django Unchained",
+		"Recently starred as 'Hugh Glass' in 'The Revenant'"
+	],
+  "person": "Leonardo DiCaprio"},
+  {
+  	"picture": "MatthewPerry.jpg",
+  	"clues": [
+  		"Born August 9th, 1969 in Williamstown, Massachusetts, United States",
+  		"Raised by his mother in Ottawa, Ontario, Canada",
+  		"Voiced 'Benny' in Fallout: New Vegas",
+  		"Won 2004 Teen Choice Award for Choice TV Actor - Comedy",
+  		"Known for playing 'Chandler Bing' in 'Friends'"
+  	],
+  	"person": "Matthew Perry"
+  }
+]
