@@ -4,10 +4,11 @@ Pull Data - some methods for pulling data out.
 Author: Ian Robertson
 """
 
-import requests
-from bs4 import BeautifulSoup
-import os
+import datetime
 import logging
+import os
+from bs4 import BeautifulSoup
+import requests
 
 
 def get_site(url, filename):
@@ -21,6 +22,35 @@ def get_site(url, filename):
     with open(filename, 'w') as f:
         f.write(t)
         logging.info('Written to file!')
+
+
+def birthday_clue(wp):
+    """Gets a birthday clue based on a WikiParse object
+
+    Parameters
+    ----------
+    wp : WikiParse
+        The wiki parse object
+    """
+    if wp.bday:
+        day_of_month = int(wp.bday.strftime('%d'))
+        if day_of_month in (1, 21, 31):
+            day_suffix = 'st'
+        elif day_of_month in (2, 22):
+            day_suffix = 'nd'
+        elif day_of_month in (3, 23):
+            day_suffix = 'rd'
+        else:
+            day_suffix = 'th'
+        birthday = '{} {}{}, {}'.format(
+            wp.bday.strftime('%B'),
+            day_of_month,
+            day_suffix,
+            wp.bday.strftime('%Y'))
+        return 'Born ' + birthday
+    else:
+        return None
+
 
 class WikiParse():
     """Parses out some info from a wiki page!"""
@@ -68,7 +98,8 @@ class WikiParse():
     def _get_bday(self):
         """Tries to grab a birthday"""
         try:
-            self.bday = self.infobox.find('span', {'class': 'bday'}).text
+            bday_string = self.infobox.find('span', {'class': 'bday'}).text
+            self.bday = datetime.datetime.strptime(bday_string, '%Y-%m-%d')
         except:
             self.bday = None
 
@@ -154,7 +185,8 @@ class WikiParse():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger()
-    urls = ['https://en.wikipedia.org/wiki/Michael_Caine',
+    urls = [
+        'https://en.wikipedia.org/wiki/Michael_Caine',
         'https://en.wikipedia.org/wiki/Melissa_McCarthy',
         'https://en.wikipedia.org/wiki/Sarah_Jessica_Parker',
         'https://en.wikipedia.org/wiki/Jerry_Seinfeld',
@@ -177,3 +209,4 @@ if __name__ == '__main__':
             get_site(url, filename)
         p = WikiParse(filename)
         print(p)
+        print(birthday_clue(p))
