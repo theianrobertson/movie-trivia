@@ -6,3 +6,10 @@ This is a little website I'm working on - the idea is that it's like the old act
 
 - Flask
 - Some other things
+
+## Instructions
+- `pyvenv venv`
+- `. venv/bin/activate`
+- `echo SOME_SECRET_STRING > key.secret`
+- `pip install -r requirements`
+- `python run.py`
