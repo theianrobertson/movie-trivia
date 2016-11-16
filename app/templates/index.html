@@ -51,7 +51,7 @@
         {% for clue in peep.clues %}
         <div class="clue">{{ clue }}</div>
         {% endfor %}
-        <div id="answer">{{ peep.person }}!</div>
+        <div id="answer">{{ answer_preamble }}  I'm {{ peep.person }}!</div>
       </div>
     </div>
 {% endblock %}
@@ -63,7 +63,7 @@
       var blurStep = maxBlur / clues.length;
       var currentClue = 0;
 
-      var aniFunc = function(){
+      var aniFunc = function() {
         document.getElementById("gauss").setAttribute("stdDeviation", (maxBlur - (blurStep * currentClue)).toString());
         if (currentClue == clues.length) {
           document.getElementById('answer').style.display = 'block';
